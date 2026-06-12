@@ -1,0 +1,6 @@
+{
+  "name": "Netex Freight",
+  "description": "Interactive logistics and supply chain digital hub for Netex Freight, featuring real-time specs configurators, dynamic routing map estimators, and quote management solvers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
