@@ -1120,7 +1120,7 @@ window.openServiceHubDivision = function(id) {
   
   // Scroll slightly down to the services layout to make it obvious
   setTimeout(() => {
-    const servicesSection = document.getElementById('services-solutions-section');
+    const servicesSection = document.getElementById('page-services');
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
