@@ -603,7 +603,7 @@ function renderServicesGrid() {
 
       <div class="mt-6 pt-4 border-t border-zinc-200 flex justify-end">
         <button
-          onclick="window.location.hash='#services'; selectServiceHubDivision('${srv.id}')"
+          onclick="window.openServiceHubDivision('${srv.id}')"
           class="text-[10px] font-mono font-bold text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 uppercase transition-colors cursor-pointer"
         >
           <span>Learn More</span>
@@ -1098,3 +1098,31 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lucide.createIcons();
   }
 });
+
+
+// Global function to open a service from anywhere
+window.openServiceHubDivision = function(id) {
+  // Navigate to services page
+  window.location.hash = '#services';
+  
+  // Set desktop active ID
+  if (typeof selectServiceHubDivision === 'function') {
+    selectServiceHubDivision(id);
+  }
+  
+  // Set mobile active ID to open the accordion
+  if (typeof activeMobileServiceId !== 'undefined') {
+    activeMobileServiceId = id;
+    if (typeof renderServicesMobileAccordion === 'function') {
+      renderServicesMobileAccordion();
+    }
+  }
+  
+  // Scroll slightly down to the services layout to make it obvious
+  setTimeout(() => {
+    const servicesSection = document.getElementById('page-services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 100);
+};
