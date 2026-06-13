@@ -1037,6 +1037,17 @@ function setupMobileMenu() {
       closeIcon?.classList.add('hidden');
     });
   });
+
+  // Close mobile menu when clicking outside of it
+  document.addEventListener('click', (event) => {
+    if (!drawer.classList.contains('hidden') && 
+        !drawer.contains(event.target) && 
+        !toggleBtn.contains(event.target)) {
+      drawer.classList.add('hidden');
+      burgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    }
+  });
 }
 
 // Scroll navigation back to top shortcut
