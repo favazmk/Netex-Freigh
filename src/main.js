@@ -159,26 +159,31 @@ const INDUSTRIES_SERVED_SUB = [
 const SERVICE_PROCESS_DATA = [
   {
     step: '01',
+    icon: 'file-text',
     title: 'Request a Quote',
     desc: 'Submit your cargo dimensions through our rate estimator or contact our desks. We analyze parameters instantly.'
   },
   {
     step: '02',
+    icon: 'search',
     title: 'Cargo Assessment',
     desc: 'Verify container compliance, HS classification codes, customs documentation, and duty exemption certificates.'
   },
   {
     step: '03',
+    icon: 'package-check',
     title: 'Packing Prep',
     desc: 'Secure shrink-wrap packaging, temperature stabilization, and expert crating carried out by terminal workers.'
   },
   {
     step: '04',
+    icon: 'plane',
     title: 'Transportation',
     desc: 'Smooth transit execution across chosen premium channels (air, ocean vessels, or regional GCC highways).'
   },
   {
     step: '05',
+    icon: 'warehouse',
     title: 'Delivery Secure',
     desc: 'Efficient drop-off at target terminal docks or coordinate complete door-to-door cargo final landing.'
   }
@@ -559,25 +564,57 @@ function renderIndustriesGrid() {
 // Render dynamic workflow timelines
 function renderWorkflowTimelineRow() {
   const container = document.getElementById('global-workflow-section-timeline');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-zinc-200 -z-0"></div>
+  const pageContainer = document.getElementById('about-page-workflow-timeline');
+  
+  const html = `
+    <!-- Glowing shipment route line (desktop only) -->
+    <div class="hidden md:block absolute top-[68px] left-[10%] right-[10%] h-[2px] bg-white/10 -z-0">
+      <!-- Animated glowing dot -->
+      <div class="absolute top-[-4px] w-2.5 h-2.5 rounded-full bg-white animate-pulse" style="animation: moveDotLine 6s linear infinite; box-shadow: 0 0 12px 3px rgba(255,255,255,0.8);"></div>
+      
+      <!-- Chevron arrows spaced along the line -->
+      <div class="absolute top-[-9px] left-[20%] text-white/30"><i data-lucide="chevrons-right" class="w-5 h-5"></i></div>
+      <div class="absolute top-[-9px] left-[45%] text-white/30"><i data-lucide="chevrons-right" class="w-5 h-5"></i></div>
+      <div class="absolute top-[-9px] left-[70%] text-white/30"><i data-lucide="chevrons-right" class="w-5 h-5"></i></div>
+      <div class="absolute top-[-9px] left-[95%] text-white/30"><i data-lucide="chevrons-right" class="w-5 h-5"></i></div>
+    </div>
+    
     ${SERVICE_PROCESS_DATA.map((step) => `
-      <div class="relative z-10 flex flex-col items-start md:items-center text-left md:text-center animate-fade-in pb-4">
-        <div class="w-14 h-14 bg-zinc-50 border border-zinc-200 hover:border-brand-blue rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs">
-          ${step.step}
-          <div class="absolute inset-1 rounded-full border border-brand-blue/10"></div>
+      <div class="relative z-10 flex flex-col items-center text-center animate-fade-in group w-full px-2 md:px-0">
+        
+        <!-- Outer Glassmorphism Card Wrapper -->
+        <div class="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/10 transition-all duration-300 w-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] h-full flex flex-col items-center relative overflow-hidden">
+          
+          <!-- Subtle top gradient glow on hover -->
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+          <!-- Step Circle / Number Indicator -->
+          <div class="mb-5 w-16 h-16 rounded-full bg-brand-blue border border-white/20 flex items-center justify-center text-white relative shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-transform duration-500 group-hover:scale-110 group-hover:border-white/40">
+            <i data-lucide="${step.icon}" class="w-7 h-7 stroke-[1.5] relative z-10"></i>
+            <div class="absolute -top-2 -right-2 bg-white text-brand-blue font-mono text-[10px] font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-brand-blue shadow-sm">
+              ${step.step}
+            </div>
+            <!-- Inner subtle ring -->
+            <div class="absolute inset-1 rounded-full border border-white/10"></div>
+          </div>
+          
+          <h4 class="font-mono text-[13px] font-bold text-white uppercase tracking-wider mb-3 leading-tight min-h-[30px] flex items-center justify-center">
+            ${step.title}
+          </h4>
+          <p class="text-white/70 text-xs leading-relaxed font-sans">
+            ${step.desc}
+          </p>
         </div>
-        <h4 class="font-mono text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2 md:max-w-[140px] md:mx-auto">
-          ${step.title}
-        </h4>
-        <p class="text-zinc-500 text-xs leading-relaxed font-sans md:mx-auto md:max-w-[190px]">
-          ${step.desc}
-        </p>
       </div>
     `).join('')}
   `;
+
+  if (container) container.innerHTML = html;
+  if (pageContainer) pageContainer.innerHTML = html;
+  
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 // ==========================================
