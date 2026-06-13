@@ -479,9 +479,9 @@ function renderProcessTimeline() {
   // Let's render the horizontal timeline for the separate About us page workflow in standard sequence
   const pipelineHtml = SERVICE_PROCESS_DATA.map((item) => `
     <div class="relative z-10 flex flex-col items-start md:items-center text-left md:text-center animate-fade-in pb-4">
-      <div class="w-14 h-14 bg-white/10 border border-white/20 hover:border-white rounded-full flex items-center justify-center text-white font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs">
+      <div class="w-14 h-14 bg-white border border-white hover:border-blue-100 rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs">
         ${item.step}
-        <div class="absolute inset-1 rounded-full border border-white/10"></div>
+        <div class="absolute inset-1 rounded-full border border-brand-blue/10"></div>
       </div>
       <h4 class="font-mono text-xs font-bold text-white uppercase tracking-wider mb-2 md:max-w-[145px] md:mx-auto">
         ${item.title}
