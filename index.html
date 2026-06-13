@@ -9,6 +9,14 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="stylesheet" href="./src/style.css" />
     <link rel="icon" type="image/png" href="./favicon.png" />
+    <style>
+      .mobile-logo { display: block; }
+      .desktop-logo { display: none; }
+      @media (min-width: 768px) {
+        .mobile-logo { display: none; }
+        .desktop-logo { display: block; }
+      }
+    </style>
   </head>
   <body class="bg-white text-zinc-950 font-sans selection:bg-brand-blue selection:text-white antialiased overflow-x-hidden relative">
 
@@ -107,9 +115,9 @@
         <!-- Logo Brand Title -->
         <div class="flex items-center">
           <!-- Mobile Logo (Favicon version) -->
-          <img src="./favicon.png" alt="Netex Freight" class="md:hidden h-10 w-auto object-contain object-left mix-blend-multiply" />
+          <img src="./favicon.png" alt="Netex Freight" class="mobile-logo h-10 w-auto object-contain object-left mix-blend-multiply" />
           <!-- Desktop Logo -->
-          <img src="./logo-cropped.png" alt="Netex Freight" class="hidden md:block h-12 w-auto object-contain object-left mix-blend-multiply" />
+          <img src="./logo-cropped.png" alt="Netex Freight" class="desktop-logo h-12 w-auto object-contain object-left mix-blend-multiply" />
         </div>
 
         <!-- Desktop Navigation links -->
