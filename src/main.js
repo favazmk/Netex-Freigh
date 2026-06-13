@@ -636,6 +636,7 @@ function renderServicesMobileAccordion() {
     
     // Create button header
     const btn = document.createElement('button');
+    btn.id = `mobile-accordion-${srv.id}`;
     btn.className = `w-full p-4 rounded-sm text-left font-mono text-xs flex items-center justify-between border cursor-pointer transition-all duration-200 ${
       isExpanded
         ? 'bg-brand-blue border-brand-blue text-white font-bold'
@@ -1118,11 +1119,20 @@ window.openServiceHubDivision = function(id) {
     }
   }
   
-  // Scroll slightly down to the services layout to make it obvious
+  // Scroll to precise interactive element depending on layout size
   setTimeout(() => {
-    const servicesSection = document.getElementById('page-services');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.innerWidth < 1024) {
+      // Mobile: scroll the specific opened accordion panel into the center of the screen
+      const mobileItem = document.getElementById(`mobile-accordion-${id}`);
+      if (mobileItem) {
+        mobileItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      // Desktop: scroll the interactive hub board into the center of the screen
+      const desktopHub = document.getElementById('services-desktop-hub');
+      if (desktopHub) {
+        desktopHub.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }, 100);
 };
