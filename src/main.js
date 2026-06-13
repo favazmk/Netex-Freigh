@@ -1086,6 +1086,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Page hash-routers listening
   window.addEventListener('hashchange', executePageRouting);
 
+  // Handle clicking links that point to the current active page
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetHash = link.getAttribute('href').replace('#', '') || 'home';
+      const currentHash = window.location.hash.replace('#', '') || 'home';
+      
+      if (targetHash === currentHash) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Also ensure mobile menu is closed
+        const drawer = document.getElementById('mobile-navigation-drawer');
+        const burgerIcon = document.getElementById('menu-icon-burger');
+        const closeIcon = document.getElementById('menu-icon-close');
+        if (drawer && !drawer.classList.contains('hidden')) {
+          drawer.classList.add('hidden');
+          burgerIcon?.classList.remove('hidden');
+          closeIcon?.classList.add('hidden');
+        }
+      }
+    });
+  });
+
   // Initial routers execute
   executePageRouting();
 
