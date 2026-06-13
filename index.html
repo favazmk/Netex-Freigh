@@ -38,9 +38,11 @@
       <svg 
         viewBox="0 0 1000 500" 
         preserveAspectRatio="xMidYMid slice" 
-        class="w-full h-full absolute inset-0 z-2 opacity-[0.09]"
+        class="w-full h-full absolute inset-0 z-2"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <!-- Map Background Group -->
+        <g opacity="0.09">
         <!-- Equatorial / Longitude coordinate text markers -->
         <text x="15" y="246" fill="#0f3a8c" class="font-mono text-[7px] tracking-widest font-semibold uppercase opacity-45">EQUATOR // 00°00'00"</text>
         <text x="502" y="25" fill="#0f3a8c" class="font-mono text-[7px] tracking-widest font-semibold uppercase opacity-45">PRIME MERIDIAN // 00°00'00"</text>
@@ -102,6 +104,7 @@
           <path d="M 485,205 Q 580,220 685,235" />
           <path d="M 685,235 Q 700,250 710,260" />
         </g>
+        </g> <!-- End Map Background Group -->
 
         <!-- Global glowing dots -->
         <g fill="#0f3a8c" class="opacity-60">
