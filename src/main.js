@@ -1048,6 +1048,15 @@ function setupMobileMenu() {
       closeIcon?.classList.add('hidden');
     }
   });
+
+  // Close mobile menu when scrolling the page
+  window.addEventListener('scroll', () => {
+    if (!drawer.classList.contains('hidden')) {
+      drawer.classList.add('hidden');
+      burgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    }
+  }, { passive: true });
 }
 
 // Scroll navigation back to top shortcut
