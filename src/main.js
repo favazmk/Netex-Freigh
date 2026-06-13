@@ -1050,13 +1050,16 @@ function setupMobileMenu() {
   });
 
   // Close mobile menu when scrolling the page
-  window.addEventListener('scroll', () => {
+  const closeMenuOnScroll = () => {
     if (!drawer.classList.contains('hidden')) {
       drawer.classList.add('hidden');
       burgerIcon?.classList.remove('hidden');
       closeIcon?.classList.add('hidden');
     }
-  }, { passive: true });
+  };
+
+  window.addEventListener('scroll', closeMenuOnScroll, { passive: true });
+  document.addEventListener('touchmove', closeMenuOnScroll, { passive: true });
 }
 
 // Scroll navigation back to top shortcut
