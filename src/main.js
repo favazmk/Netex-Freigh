@@ -476,17 +476,16 @@ function renderProcessTimeline() {
 
   if (container) container.innerHTML = timelineHtml;
 
-  // Let's render the horizontal timeline for the separate About us page workflow in standard sequence
-  const pipelineHtml = SERVICE_PROCESS_DATA.map((item) => `
+  const pipelineHtml = SERVICE_PROCESS_DATA.map((item, index) => `
     <div class="relative z-10 flex flex-col items-start md:items-center text-left md:text-center animate-fade-in pb-4">
-      <div class="w-14 h-14 bg-white border border-white hover:border-blue-100 rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs">
+      <div class="w-14 h-14 bg-white border border-white hover:border-blue-100 rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs z-10">
         ${item.step}
         <div class="absolute inset-1 rounded-full border border-brand-blue/10"></div>
       </div>
-      <h4 class="font-mono text-xs font-bold text-white uppercase tracking-wider mb-2 md:max-w-[145px] md:mx-auto">
+      <h4 class="font-mono text-xs font-bold text-white uppercase tracking-wider mb-2 md:max-w-[145px] md:mx-auto relative z-10">
         ${item.title}
       </h4>
-      <p class="text-white opacity-80 text-xs leading-relaxed font-sans md:mx-auto md:max-w-[190px]">
+      <p class="text-white opacity-80 text-xs leading-relaxed font-sans md:mx-auto md:max-w-[190px] relative z-10">
         ${item.desc}
       </p>
     </div>
@@ -494,7 +493,6 @@ function renderProcessTimeline() {
 
   if (pageContainer) {
     pageContainer.innerHTML = `
-      <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-white/20 -z-0"></div>
       ${pipelineHtml}
     `;
   }
@@ -563,16 +561,16 @@ function renderWorkflowTimelineRow() {
 
   container.innerHTML = `
     <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-zinc-200 -z-0"></div>
-    ${SERVICE_PROCESS_DATA.map((step) => `
+    ${SERVICE_PROCESS_DATA.map((step, index) => `
       <div class="relative z-10 flex flex-col items-start md:items-center text-left md:text-center animate-fade-in pb-4">
-        <div class="w-14 h-14 bg-zinc-50 border border-zinc-200 hover:border-brand-blue rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs">
+        <div class="w-14 h-14 bg-zinc-50 border border-zinc-200 hover:border-brand-blue rounded-full flex items-center justify-center text-brand-blue font-mono text-sm font-black transition-colors md:mx-auto mb-4 relative shadow-xs z-10">
           ${step.step}
           <div class="absolute inset-1 rounded-full border border-brand-blue/10"></div>
         </div>
-        <h4 class="font-mono text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2 md:max-w-[140px] md:mx-auto">
+        <h4 class="font-mono text-xs font-bold text-zinc-900 uppercase tracking-wider mb-2 md:max-w-[140px] md:mx-auto relative z-10">
           ${step.title}
         </h4>
-        <p class="text-zinc-500 text-xs leading-relaxed font-sans md:mx-auto md:max-w-[190px]">
+        <p class="text-zinc-500 text-xs leading-relaxed font-sans md:mx-auto md:max-w-[190px] relative z-10">
           ${step.desc}
         </p>
       </div>
@@ -933,6 +931,11 @@ function setupContactForms() {
       return;
     }
 
+    // Build professional WhatsApp message
+    const waText = `Hello Netex Freight Dispatch,\n\nI have a new cargo routing inquiry. Please find my details below:\n\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* ${phone}\n\n*Inquiry Details:*\n${message}\n\nPlease let me know the best way to proceed.\n\nThank you!`;
+    const waUrl = `https://wa.me/971543043515?text=${encodeURIComponent(waText)}`;
+    window.open(waUrl, '_blank');
+
     // Showcase alert success message
     const alertBox = document.getElementById('contact-form-success-alert');
     if (alertBox) {
@@ -1133,6 +1136,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // Contact form triggers
   setupContactForms();
 
+  // Sticky Widget Logic
+  const stickyBtn = document.getElementById('sticky-contact-btn');
+  const stickyMenu = document.getElementById('sticky-contact-menu');
+  const iconHeadphones = document.getElementById('sticky-icon-headphones');
+  const iconClose = document.getElementById('sticky-icon-close');
+
+  if (stickyBtn && stickyMenu) {
+    stickyBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stickyMenu.classList.toggle('hidden');
+      stickyMenu.classList.toggle('flex');
+      iconHeadphones.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!stickyBtn.contains(e.target) && !stickyMenu.contains(e.target)) {
+        if (!stickyMenu.classList.contains('hidden')) {
+          stickyMenu.classList.add('hidden');
+          stickyMenu.classList.remove('flex');
+          iconHeadphones.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      }
+    });
+  }
+
   // Duplication bindings for separate pages
 
 
@@ -1185,3 +1215,20 @@ window.openServiceHubDivision = function(id) {
     }
   }, 100);
 };
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const steps = document.querySelectorAll('.reveal-step');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    steps.forEach((step, index) => {
+        step.style.transitionDelay = `${index * 0.15}s`;
+        observer.observe(step);
+    });
+});
