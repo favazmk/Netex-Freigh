@@ -1038,8 +1038,8 @@ function setupMobileMenu() {
     });
   });
 
-  // Close mobile menu when clicking outside of it
-  document.addEventListener('click', (event) => {
+  // Close mobile menu when clicking or touching outside of it
+  const closeMenuOnOutsideInteraction = (event) => {
     if (!drawer.classList.contains('hidden') && 
         !drawer.contains(event.target) && 
         !toggleBtn.contains(event.target)) {
@@ -1047,7 +1047,10 @@ function setupMobileMenu() {
       burgerIcon?.classList.remove('hidden');
       closeIcon?.classList.add('hidden');
     }
-  });
+  };
+
+  document.addEventListener('click', closeMenuOnOutsideInteraction);
+  document.addEventListener('touchstart', closeMenuOnOutsideInteraction, { passive: true });
 
   // Close mobile menu when scrolling the page
   const closeMenuOnScroll = () => {
