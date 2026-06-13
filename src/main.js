@@ -866,33 +866,7 @@ function setupContactForms() {
   });
 }
 
-// Copy Contact Section for Separate Contact Us Tab
-function copyContactSectionToContactPage() {
-  const targetContainer = document.getElementById('contact-page-layout-grid');
-  const sourceWrapper = document.getElementById('contact-form-anchor-wrapper');
-  if (targetContainer && sourceWrapper) {
-    targetContainer.innerHTML = sourceWrapper.innerHTML;
 
-    // Standard script rebinding is necessary when elements are duplicated
-    const dupForm = targetContainer.querySelector('form');
-    if (dupForm) {
-      dupForm.id = "contact-inquiry-direct-form-page";
-      
-      // Bind submission on duplicated form
-      dupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const alertBox = dupForm.querySelector('#contact-form-success-alert');
-        if (alertBox) {
-          alertBox.classList.remove('hidden');
-        }
-        dupForm.reset();
-        setTimeout(() => {
-          if (alertBox) alertBox.classList.add('hidden');
-        }, 5000);
-      });
-    }
-  }
-}
 
 // ==========================================
 // 9. BROCHURE PDF PREVIEW MODAL
@@ -1024,7 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupContactForms();
 
   // Duplication bindings for separate pages
-  copyContactSectionToContactPage();
+
 
   // Mobile and utility menus
   setupMobileMenu();
